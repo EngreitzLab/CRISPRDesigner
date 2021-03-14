@@ -12,8 +12,6 @@ properties:
     type: string
   off_target_bits:
     type: string
-  promoters:
-    type: string
   regions:
     type: string
   java_memory:
@@ -26,7 +24,6 @@ required:
   - genome_fasta
   - genome_sizes
   - off_target_bits
-  - promoters
   - regions
   - java_memory
   - split_guides
