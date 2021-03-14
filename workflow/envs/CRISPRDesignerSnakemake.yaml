@@ -1,0 +1,11 @@
+## Python 3
+name: CRISPRDesignerSnakemake
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+  - r
+dependencies:
+  - java-1.7.0-openjdk-cos6-x86_64
+  - snakemake
+  - bedtools

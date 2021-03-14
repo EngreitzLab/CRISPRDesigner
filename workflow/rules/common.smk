@@ -10,6 +10,18 @@ singularity: "docker://continuumio/miniconda3"
 configfile: "config/config.yaml"
 validate(config, schema="../schemas/config.schema.yaml")
 
-samples = pd.read_csv(config["samples"], sep="\t").set_index("sample", drop=False)
-samples.index.names = ["sample_id"]
-validate(samples, schema="../schemas/samples.schema.yaml")
+
+####### helpers ###########
+
+def all_input(wildcards):
+
+    wanted_input = []
+
+    # Predesigned guide regions
+    wanted_input.extend([
+    	"results/GuideDesign/filteredGuides.bed",
+    	"results/GuideDesign/designGuides.txt",
+    	"results/GuideDesign/designGuides.bed"
+    	])
+
+    return wanted_input

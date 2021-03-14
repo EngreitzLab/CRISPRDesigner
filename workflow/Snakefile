@@ -2,17 +2,14 @@
 # After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
 
 
-report: "report/workflow.rst"
+# this container defines the underlying OS for each job when using the workflow
+# with --use-conda --use-singularity
+container: "docker://continuumio/miniconda3"
 
-# Allow users to fix the underlying OS via singularity.
-singularity: "docker://continuumio/miniconda3"
-
-
-rule all:
-    input:
-        # The first rule should define the default target files
-        # Subsequent target rules can be specified below. They should start with all_*.
-
+# report: "report/workflow.rst"
 
 include: "rules/common.smk"
-include: "rules/other.smk"
+include: "rules/design_guides.smk"
+
+rule all:
+    input: all_input

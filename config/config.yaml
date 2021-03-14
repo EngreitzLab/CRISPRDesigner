@@ -1,4 +1,30 @@
-# This file should contain everything to configure the workflow on a global scale.
-# In case of sample based data, it should be complemented by a samples.tsv file that contains
-# one row per sample. It can be parsed easily via pandas.
-samples: "config/samples.tsv"
+### Config file for CRISPRiTilingDesign pipeline
+
+## Definitions:
+##  Region aka guideSet - a (usually) small genomic range among which gRNAs are chosen, e.g. DNase peak or promoter
+##  RegionGroup - name for an arbitrary group of regions (e.g., all DNase peaks near a given gene)
+##  Pool - a set of oligos for pooled synthesis
+##  Subpool - a subset of a pool of oligos, usually with unique primer sites to enable PCR amplifying out the subpool
+
+
+## Genome files
+genome_fasta:     "/oak/stanford/projects/genomics-refs/refs/hg19/male.hg19.fa"
+genome_sizes:     "/oak/stanford/projects/genomics-refs/refs/hg19/hg19.chrom.sizes"
+off_target_bits:  "/oak/stanford/groups/engreitz/Projects/CRISPR/OffTargets/hg19.CRISPR.bit"
+promoters:        "/home/groups/engreitz/Software/ABC-Enhancer-Gene-Prediction/reference/RefSeqCurated.170308.bed.CollapsedGeneBounds.TSS500bp.bed"
+
+## 
+regions:          "config/ChosenGenes.HCT116Regions.names.bed"
+
+## Pre-designed gRNAs (do not redesign or rescore guides in these regions)
+predesigned_guides: {
+  MycLocus: {
+    guides: "resources/filteredGuides.myc2mb.bed",
+    regions: "resources/MycLocus.bed"
+  }
+}
+
+java_memory:      "12g"  ## Increase if Java command fails (sometimes needs up to 64g for large sets of regions) 
+split_guides:     50    ## Split scoring into chunks of 500 gRNAs 
+
+

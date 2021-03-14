@@ -6,9 +6,27 @@ type: object
 
 # possible entries of the config file and which type they should be
 properties:
-  samples:
+  genome_fasta:
     type: string
+  genome_sizes:
+    type: string
+  off_target_bits:
+    type: string
+  promoters:
+    type: string
+  regions:
+    type: string
+  java_memory:
+    type: string
+  split_guides:
+    type: integer
 
 # entries that have to be in the config file for successful validation
 required:
-  - samples
+  - genome_fasta
+  - genome_sizes
+  - off_target_bits
+  - promoters
+  - regions
+  - java_memory
+  - split_guides
