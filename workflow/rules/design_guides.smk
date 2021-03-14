@@ -8,8 +8,27 @@ rule combine_predesigned_guides:
 		genome_sizes = config["genome_sizes"]
 	output:
 		combined_regions = "results/GuideDesign/predesignedGuideRegions.bed"
-	shell:
-		"cat {input.regions} | bedtools sort -i stdin -faidx {input.genome_sizes} > {output.combined_regions}"
+	run:
+		if len(input.regions) > 0:
+			shell(f"cat {input.regions} | bedtools sort -i stdin -faidx {input.genome_sizes} > {output.combined_regions}")
+		else:
+			shell(f"touch {output.combined_regions}")
+
+
+rule get_predesigned_guides:
+	input:
+		predesigned_guides = [config["predesigned_guides"][guide_set]["guides"] for guide_set in config["predesigned_guides"]],
+		regions = config["regions"],
+		genome_sizes = config["genome_sizes"]
+	output:
+		guides_in_regions = "results/GuideDesign/filteredGuides.predesigned.bed"
+	run:
+		if len(input.predesigned_guides) > 0:
+			shell("""cat {input.predesigned_guides} | awk -v OFS=$'\t' '{{ $14="FILLER"; print $0 }}' | bedtools sort -i stdin -faidx {input.genome_sizes} | uniq | \
+bedtools intersect -a stdin -b {input.regions} -wa -wb | cut -f 1-13,18 > {output.guides_in_regions}
+""")
+		else:
+			shell(f"touch {output.guides_in_regions}")
 
 
 rule subtract_predesigned_regions:
@@ -22,22 +41,10 @@ rule subtract_predesigned_regions:
 	shell:
 		"bedtools slop -i {input.predesigned} -b -22 -g {input.genome_sizes} |"
 		"bedtools sort -i stdin -faidx {input.genome_sizes} |"
-		"bedtools subtract -a {input.regions} -b stdin -sorted -g {input.genome_sizes} >"
+		"bedtools subtract -a {input.regions} -b stdin -g {input.genome_sizes} >"
 		"{output.regions_minus_predesigned}"
 
 
-rule get_predesigned_guides:
-	input:
-		predesigned_guides = [config["predesigned_guides"][guide_set]["guides"] for guide_set in config["predesigned_guides"]],
-		regions = config["regions"],
-		genome_sizes = config["genome_sizes"]
-	output:
-		guides_in_regions = "results/GuideDesign/filteredGuides.predesigned.bed"
-	shell:
-		"""
-		cat {input.predesigned_guides} | awk -v OFS=$'\t' '{{ $14="FILLER"; print $0 }}' | bedtools sort -i stdin -faidx {input.genome_sizes} | uniq | \
-		  bedtools intersect -a stdin -b {input.regions} -wa -wb | cut -f 1-13,18 > {output.guides_in_regions}
-		"""
 
 rule find_all_guides:
 	## Find all NGG PAM guides in the selected regions
@@ -80,7 +87,7 @@ checkpoint scatter_scores:
 	shell:
 		"""
 		mkdir {output}
-		split --lines={params.split_guides} --numeric-suffixes=1 {input.guides} {output}/guides.
+		split --lines={params.split_guides} -d {input.guides} {output}/guides.
 		for file in {output}/guides.*; do 
 		  mkdir -p {output}/dir-$(basename $file)
 		  mv $file {output}/dir-$(basename $file)/allGuides.bed
