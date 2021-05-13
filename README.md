@@ -71,7 +71,7 @@ snakemake \
   --config java_memory=16g \
   --cores 1 \
   --jobs 50 \
-  --cluster "sbatch -n 1 -c 12 --mem 16G -t 2-00:00 -p engreitz -J CRISPRDesigner_{rule} -o logs/{rule}_{wildcards} -e logs/{rule}_{wildcards}"
+  --cluster "sbatch -n 1 -c 1 --mem 16G -t 2-00:00 -p engreitz -J CRISPRDesigner_{rule} -o logs/{rule}_{wildcards} -e logs/{rule}_{wildcards}"
 `
 
 For more about cluster configuration using snakemake, see [here](https://www.sichong.site/2020/02/25/snakemake-and-slurm-how-to-manage-workflow-with-resource-constraint-on-hpc/)
