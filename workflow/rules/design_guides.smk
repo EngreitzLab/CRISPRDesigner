@@ -69,7 +69,7 @@ SKIP_SCORING=true"
 			print("Running: " + command)
 			proc_output = subprocess.check_output(command, shell=True) 
 		except subprocess.CalledProcessError as exc:
-			if 'filteredGuides.bed' in exc.output:
+			if 'filteredGuides.bed' in str(exc.output):
 				print("Snakemake caught Java Exception: Ignore this error, which is expected")
 				pass
 			else:
