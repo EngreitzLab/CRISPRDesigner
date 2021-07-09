@@ -1,6 +1,7 @@
 ### Design and score gRNAs
 
 import subprocess
+import os
 
 rule combine_predesigned_guides:
 	input:
@@ -31,7 +32,7 @@ bedtools intersect -a stdin -b {input.regions} -wa -wb | cut -f 1-13,18 > {outpu
 			shell(f"touch {output.guides_in_regions}")
 
 
-rule subtract_predesigned_regions:
+rule subtract_predesigned_regions_and_merge:
 	input:
 		predesigned = "results/GuideDesign/predesignedGuideRegions.bed",
 		regions = config["regions"],
@@ -41,7 +42,9 @@ rule subtract_predesigned_regions:
 	shell:
 		"bedtools slop -i {input.predesigned} -b -22 -g {input.genome_sizes} |"
 		"bedtools sort -i stdin -faidx {input.genome_sizes} |"
-		"bedtools subtract -a {input.regions} -b stdin -g {input.genome_sizes} >"
+		"bedtools subtract -a {input.regions} -b stdin -g {input.genome_sizes} |"
+		"bedtools sort -i stdin -faidx {input.genome_sizes} |"
+		"bedtools merge -i stdin -g {input.genome_sizes} >"
 		"{output.regions_minus_predesigned}"
 
 
@@ -104,18 +107,24 @@ rule score_guides:
 	output:
 		scored = 'results/GuideDesign/scatter/guides.{i}/filteredGuides.bed'
 	params:
-		mem = config["java_memory"]
+		mem = config["java_memory"],
+		cwd = os.getcwd()
 	shell:
-		"java -Xmx{params.mem} -jar workflow/scripts/CRISPRDesigner.jar \
-		  TARGETS={input.regions} \
-		  OUTPUT_DIR={input.guide_scatter} \
+		"""
+		(
+		cd {input.guide_scatter}
+		java -Xmx{params.mem} -jar workflow/scripts/CRISPRDesigner.jar \
+		  TARGETS={params.cwd}/{input.regions} \
+		  OUTPUT_DIR={params.cwd}/{input.guide_scatter} \
 		  GENOME_FASTA={input.genome_fasta} \
 		  LENIENT=false \
 		  OFF_TARGETS={input.off_target_bits} \
 		  SKIP_PAIRING=true \
 		  DIVIDE_AND_CONQUER=false \
 		  SKIP_SCORING=false \
-		  SKIP_GENERATION=true"	
+		  SKIP_GENERATION=true"
+		)
+		"""
 		# SKIP_GENERATION=true means that the script will read a set of guides present in "OUTPUT_DIR/allGuides.bed"
 		# SKIP_SCORING=false means that the script will conduct the off-targeting scoring calculation
 
@@ -130,14 +139,21 @@ def aggregate_input(wildcards):
 	return expand('{dir}/guides.{i}/filteredGuides.bed', dir=checkpoint_output, i=ivals)
 
 
-rule gather_guide_scores:
+rule gather_and_relabel_guide_scores:
 	input:
 		aggregate_input
+	params:
+		genome_sizes = config["genome_sizes"],
+		regions = config["regions"]
 	output:
 		combined = 'results/GuideDesign/filteredGuides.new.bed'
 	shell:
 		'''
-		cat {input} > {output.combined}
+		cat {input} | \
+		awk -v OFS=$'\t' '{{ $14="FILLER"; print $0 }}' | \
+		bedtools sort -i stdin -faidx {params.genome_sizes} | \
+		uniq | \
+		bedtools intersect -a stdin -b {params.regions} -wa -wb | cut -f 1-13,18 > {output.combined}
 		'''
 
 rule combine_new_predesigned:
@@ -153,6 +169,8 @@ rule combine_new_predesigned:
 		"""
 
 rule filter_guides:
+    ## Filter on MIT specificity score > 50, and no "TTTT" sequences
+    ## Also rearranges the columns and outputs a BED file for viewing
 	input:
 		combined_guides = 'results/GuideDesign/filteredGuides.bed',
 		genome_sizes = config["genome_sizes"]
