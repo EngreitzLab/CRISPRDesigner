@@ -122,7 +122,7 @@ rule score_guides:
 		  SKIP_PAIRING=true \
 		  DIVIDE_AND_CONQUER=false \
 		  SKIP_SCORING=false \
-		  SKIP_GENERATION=true || true"
+		  SKIP_GENERATION=true || true
 		)
 		"""
 		# SKIP_GENERATION=true means that the script will read a set of guides present in "OUTPUT_DIR/allGuides.bed"
