@@ -1,11 +1,18 @@
 ## Python 3
 name: CRISPRDesignerSnakemake
 channels:
-  - defaults
-  - bioconda
-  - conda-forge
+  - biobuilds
   - r
+  - anaconda
+  - conda-forge
+  - bioconda
+  - defaults
 dependencies:
   - java-1.7.0-openjdk-cos6-x86_64
   - snakemake
+  - python
+  - pandas
   - bedtools
+  - r
+  - r-e1071
+  - bioconductor-limma
