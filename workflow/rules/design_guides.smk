@@ -113,7 +113,7 @@ rule score_guides:
 		"""
 		(
 		cd {input.guide_scatter}
-		java -Xmx{params.mem} -jar workflow/scripts/CRISPRDesigner.jar \
+		java -Xmx{params.mem} -jar {params.cwd}/workflow/scripts/CRISPRDesigner.jar \
 		  TARGETS={params.cwd}/{input.regions} \
 		  OUTPUT_DIR={params.cwd}/{input.guide_scatter} \
 		  GENOME_FASTA={input.genome_fasta} \
@@ -122,7 +122,7 @@ rule score_guides:
 		  SKIP_PAIRING=true \
 		  DIVIDE_AND_CONQUER=false \
 		  SKIP_SCORING=false \
-		  SKIP_GENERATION=true || true
+		  SKIP_GENERATION=true
 		)
 		"""
 		# SKIP_GENERATION=true means that the script will read a set of guides present in "OUTPUT_DIR/allGuides.bed"
