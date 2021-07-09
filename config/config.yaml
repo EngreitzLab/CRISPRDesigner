@@ -14,17 +14,17 @@ off_target_bits:  "/oak/stanford/groups/engreitz/Projects/CRISPR/OffTargets/hg19
 promoters:        "/home/groups/engreitz/Software/ABC-Enhancer-Gene-Prediction/reference/RefSeqCurated.170308.bed.CollapsedGeneBounds.TSS500bp.bed"
 
 ## 
-regions:          "config/ChosenGenes.HCT116Regions.names.bed"
+regions:          "../../01_ChooseRegions/ChosenGenes.AllRegions.bed"
 
 ## Pre-designed gRNAs (do not redesign or rescore guides in these regions)
 predesigned_guides: {
-  MycLocus: {
-    guides: "resources/filteredGuides.myc2mb.bed",
-    regions: "resources/MycLocus.bed"
+  Prior210615: {
+    guides: "/oak/stanford/groups/engreitz/Projects/CRISPRDesign/210615_CollatedFilteredGuides/filteredGuides.210615Combined.bed",
+    regions: "/oak/stanford/groups/engreitz/Projects/CRISPRDesign/210615_CollatedFilteredGuides/regions.210615Combined.bed"
   }
 }
 
-java_memory:      "12g"  ## Increase if Java command fails (sometimes needs up to 64g for large sets of regions) 
-split_guides:     50    ## Split scoring into chunks of 500 gRNAs 
+java_memory:      "14g"  ## Increase if Java command fails (sometimes needs up to 64g for large sets of regions) 
+split_guides:     50    ## Split scoring into chunks of N guideRNAs
 
 
