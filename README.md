@@ -28,6 +28,10 @@ Then, the following filters are applied to remove gRNAs that match any of the fo
 
 This code also allows providing a list of previously designed and scored gRNAs, so that new runs only need to design gRNAs for new regions.
 
+## Genome builds
+
+Currently the pipeline only works with hg19 and mm9, because we use a custom implementation of the MIT Specificity Score algorithm that is only available in those genome builds.  This could be circumvented by switching to an alternative guide off-target scoring algorithm to support other genomes. 
+
 ## Usage
 
 ### Step 1: Clone this github repository
