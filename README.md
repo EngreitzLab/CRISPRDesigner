@@ -90,7 +90,9 @@ For more about cluster configuration using snakemake, see [here](https://www.sic
 Final outputs of the pipeline will be found in `results/GuideDesign/`. Key files are:
 
 `designGuides.txt` example:
-`chr	start	end	locus	score	strand	GuideSequenceWithPAM	guideSet	SSC
+
+`
+chr	start	end	locus	score	strand	GuideSequenceWithPAM	guideSet	SSC
 chrX	47655734	47655754	chrX:47655734-47655754:-	69.41302489032086	-	CAAGCAACCAAGAGTATTTGAGG	K562|chrX:47655746-47656047	0
 chrX	47655787	47655807	chrX:47655787-47655807:-	76.32325648993465	-	CAGAGGCAGCAAAAGGCCTAGGG	K562|chrX:47655746-47656047	0
 chrX	47655787	47655807	chrX:47655787-47655807:-	76.32298400105441	-	CAGAGGCAGCAAAAGGCCTAGGG	K562|chrX:47655746-47656047	0
@@ -107,6 +109,6 @@ strand      genomic strand of gRNA spacer
 GuideSequenceWithPAM    Sequence of gRNA spacer plus trailing NGG PAM sequence from genome
 guideSet    String that matches one of the input regions
 SSC         [ignore]
-
+`
 
 `designGuides.bed` has a subset of columns and is formatted as a BED file for viewing in a genome browser.
