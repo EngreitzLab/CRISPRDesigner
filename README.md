@@ -48,7 +48,15 @@ Create an input 'regions' BED file, with columns `chr   start   end     name`. T
 
 ### Step 4: Configure workflow
 
-Configure the workflow according to your needs via editing the files in the `config/` folder. Adjust `config.yaml` to configure the workflow execution, including to define the `regions` variable to point to your BED file. If desired, set up `predesigned_guides` in `config.yaml`.
+Configure the workflow according to your needs via editing the files in the `config/` folder. Adjust `config.yaml` to configure the workflow execution, including to define the `regions` variable to point to your BED file. If desired, set up `predesigned_guides` in `config.yaml`.  
+
+For non-Engreitz Lab users, large input files can be downloaded [here](https://drive.google.com/drive/u/1/folders/1F5-v0KopsE7hshjwMbHEryXd2wkDdR2Q):
+    
+    hg19.CRISPR.bit         Custom bit-compressed index for off-target scoring for hg19
+    mm9.CRISPR.sorted.bit   Custom bit-compressed index for off-target scoring for mm9
+    filteredGuides.210615Combined.bed.gz    Pre-designed and pre-scored gRNAs in a large number of regions in the human genome (hg19), including all gene promoters, GATA1 and MYC loci, and others. 
+    regions.210615Combined.bed  Regions corresponding to the gRNAs designed above.
+    
 
 ### Step 5: Execute workflow
 
