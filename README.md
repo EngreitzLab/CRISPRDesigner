@@ -91,24 +91,22 @@ Final outputs of the pipeline will be found in `results/GuideDesign/`. Key files
 
 `designGuides.txt` example:
 
-`
-chr	start	end	locus	score	strand	GuideSequenceWithPAM	guideSet	SSC
-chrX	47655734	47655754	chrX:47655734-47655754:-	69.41302489032086	-	CAAGCAACCAAGAGTATTTGAGG	K562|chrX:47655746-47656047	0
-chrX	47655787	47655807	chrX:47655787-47655807:-	76.32325648993465	-	CAGAGGCAGCAAAAGGCCTAGGG	K562|chrX:47655746-47656047	0
-chrX	47655787	47655807	chrX:47655787-47655807:-	76.32298400105441	-	CAGAGGCAGCAAAAGGCCTAGGG	K562|chrX:47655746-47656047	0
-chrX	47655788	47655808	chrX:47655788-47655808:-	66.18525320395382	-	TCAGAGGCAGCAAAAGGCCTAGG	K562|chrX:47655746-47656047	0
-chrX	47655794	47655814	chrX:47655794-47655814:-	66.54001770837637	-	CATTCTTCAGAGGCAGCAAAAGG	K562|chrX:47655746-47656047	0
+    chr	start	end	locus	score	strand	GuideSequenceWithPAM	guideSet	SSC
+    chrX	47655734	47655754	chrX:47655734-47655754:-	69.41302489032086	-	CAAGCAACCAAGAGTATTTGAGG	K562|chrX:47655746-47656047	0
+    chrX	47655787	47655807	chrX:47655787-47655807:-	76.32325648993465	-	CAGAGGCAGCAAAAGGCCTAGGG	K562|chrX:47655746-47656047	0
+    chrX	47655787	47655807	chrX:47655787-47655807:-	76.32298400105441	-	CAGAGGCAGCAAAAGGCCTAGGG	K562|chrX:47655746-47656047	0
+    chrX	47655788	47655808	chrX:47655788-47655808:-	66.18525320395382	-	TCAGAGGCAGCAAAAGGCCTAGG	K562|chrX:47655746-47656047	0
+    chrX	47655794	47655814	chrX:47655794-47655814:-	66.54001770837637	-	CATTCTTCAGAGGCAGCAAAAGG	K562|chrX:47655746-47656047	0
 
-Column description:
-chr         chromosome
-start       start coordinate of gRNA spacer
-end         end coordinate of gRNA spacer
-locus       coordinates of gRNA spacer
-score       The score has two components. The integer component (0-100) is a specificity score, where 100 is good (high specificity, low off-targets) and 0 is bad (low specificity, high off-target potential). The decimal component (0.0-0.1) is a efficiency score, where 0.1 is good and 0.0 is bad.
-strand      genomic strand of gRNA spacer
-GuideSequenceWithPAM    Sequence of gRNA spacer plus trailing NGG PAM sequence from genome
-guideSet    String that matches one of the input regions
-SSC         [ignore]
-`
+    Column description:
+    chr         chromosome
+    start       start coordinate of gRNA spacer
+    end         end coordinate of gRNA spacer
+    locus       coordinates of gRNA spacer
+    score       The score has two components. The integer component (0-100) is a specificity score, where 100 is good (high specificity, low off-targets) and 0 is bad (low specificity, high off-target potential). The decimal component (0.0-0.1) is a efficiency score, where 0.1 is good and 0.0 is bad.
+    strand      genomic strand of gRNA spacer
+    GuideSequenceWithPAM    Sequence of gRNA spacer plus trailing NGG PAM sequence from genome
+    guideSet    String that matches one of the input regions
+    SSC         [ignore]
 
 `designGuides.bed` has a subset of columns and is formatted as a BED file for viewing in a genome browser.
