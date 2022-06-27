@@ -24,7 +24,7 @@ Then, the following filters are applied to remove gRNAs that match any of the fo
 - 5-mer mononucleotide repeats 
 - Low-complexity sequences, defined as 10 nucleotides of 2-nt repeat, 12 nucleotides of 3- or 4-nt repeats, or 18 nucleotides of 5- or 6-nt repeats
 - <= 20% GC content
-- >= 90% GC content  
+- \>= 90% GC content  
 
 This code also allows providing a list of previously designed and scored gRNAs, so that new runs only need to design gRNAs for new regions.
 
