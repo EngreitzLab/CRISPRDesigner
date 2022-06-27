@@ -8,6 +8,7 @@
 
 
 ## Genome files
+##   Download off_target_bits files for hg19 or mm9 from https://drive.google.com/drive/u/1/folders/1F5-v0KopsE7hshjwMbHEryXd2wkDdR2Q
 genome_fasta:     "/oak/stanford/projects/genomics-refs/refs/hg19/male.hg19.fa"
 genome_sizes:     "/oak/stanford/projects/genomics-refs/refs/hg19/hg19.chrom.sizes"
 off_target_bits:  "/oak/stanford/groups/engreitz/Projects/CRISPR/OffTargets/hg19.CRISPR.bit"
@@ -16,9 +17,9 @@ promoters:        "/home/groups/engreitz/Software/ABC-Enhancer-Gene-Prediction/r
 ## 
 regions:          "../../01_ChooseRegions/ChosenGenes.AllRegions.bed"
 
-## Pre-designed gRNAs (do not redesign or rescore guides in these regions)
+## Pre-designed gRNAs (provide so designer will not redesign or rescore guides in these regions, to save compute time)
 predesigned_guides: {
-  Prior210615: {
+  Prior210615: {  ## These files can be downloaded from https://drive.google.com/drive/u/1/folders/1F5-v0KopsE7hshjwMbHEryXd2wkDdR2Q
     guides: "/oak/stanford/groups/engreitz/Projects/CRISPRDesign/210615_CollatedFilteredGuides/filteredGuides.210615Combined.bed",
     regions: "/oak/stanford/groups/engreitz/Projects/CRISPRDesign/210615_CollatedFilteredGuides/regions.210615Combined.bed"
   }
